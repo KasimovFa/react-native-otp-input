@@ -2,6 +2,8 @@
 import { InputProps, OTPInputViewState } from '@twotalltotems/react-native-otp-input';
 import { Component } from 'react';
 import { TextInput } from 'react-native';
+declare type TWordStructure = readonly boolean[];
+export declare type TSmartChunkedArray = readonly TWordStructure[];
 export default class OTPInputView extends Component<InputProps, OTPInputViewState> {
     static defaultProps: InputProps;
     private fields;
@@ -28,3 +30,4 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
     renderTextFields: () => JSX.Element[];
     render(): JSX.Element;
 }
+export {};

@@ -4,6 +4,15 @@ import Clipboard from '@react-native-community/clipboard';
 import styles from './styles';
 import { isAutoFillSupported } from './helpers/device';
 import { codeToArray } from './helpers/codeToArray';
+// const getDerivedIndex = (
+//     smartChunkedArray: TSmartChunkedArray,
+//     rowIndex: number,
+//   ): number => {
+//     if (rowIndex === 0) {
+//       return rowIndex;
+//     }
+//     return 0
+//   };
 export default class OTPInputView extends Component {
     constructor(props) {
         super(props);
@@ -130,12 +139,12 @@ export default class OTPInputView extends Component {
             const { selectedIndex, digits } = this.state;
             const { clearInputs, placeholderCharacter, placeholderTextColor } = this.props;
             const { color: defaultPlaceholderTextColor } = { ...defaultTextFieldStyle, ...codeInputFieldStyle };
-            let singleInput = true;
-            if (this.props.wordStructure) {
-                singleInput = this.props.wordStructure[index];
+            let indexInput = index;
+            if (index > 3) {
+                indexInput = index - 1;
             }
             return (<View pointerEvents="none" key={index + "view"} testID="inputSlotView">
-                {singleInput ?
+            {index !== 3 ?
                 <TextInput testID="textInput" underlineColorAndroid='rgba(0,0,0,0)' style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]} ref={ref => { this.fields[index] = ref; }} onChangeText={text => {
                     this.handleChangeText(index, text);
                 }} onKeyPress={({ nativeEvent: { key } }) => { this.handleKeyPressTextInput(index, key); }} value={!clearInputs ? digits[index] : ""} keyboardAppearance={keyboardAppearance} keyboardType={keyboardType} textContentType={isAutoFillSupported ? "oneTimeCode" : "none"} key={index} selectionColor={selectionColor} secureTextEntry={secureTextEntry} editable={editable} placeholder={placeholderCharacter} placeholderTextColor={placeholderTextColor || defaultPlaceholderTextColor}/>
@@ -148,9 +157,8 @@ export default class OTPInputView extends Component {
             </View>);
         };
         this.renderTextFields = () => {
-            var _a, _b;
             const { pinCount } = this.props;
-            const totalCount = ((_a = this.props.wordStructure) === null || _a === void 0 ? void 0 : _a.length) ? (_b = this.props.wordStructure) === null || _b === void 0 ? void 0 : _b.length : 0;
+            const totalCount = 7;
             const array = new Array(totalCount).fill(0);
             return array.map(this.renderOneInputField);
         };
@@ -209,5 +217,6 @@ OTPInputView.defaultProps = {
     clearInputs: false,
     placeholderCharacter: "",
     selectionColor: '#000',
+    wordStructure: ['true', 'true', 'tue', 'false', 'false', 'false']
 };
 //# sourceMappingURL=index.js.map
