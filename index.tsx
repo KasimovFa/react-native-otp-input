@@ -193,14 +193,11 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
         }
       
 
-
         return (
             <View pointerEvents="none" key={index + "view"} testID="inputSlotView">
                 {
                     singleInput ?
-                
-    
-                <TextInput
+                    <TextInput
                     testID="textInput"
                     underlineColorAndroid='rgba(0,0,0,0)'
                     style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]}
@@ -237,7 +234,7 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
     renderTextFields = () => {
         const { pinCount } = this.props
         const totalCount = this.props.wordStructure?.length ? this.props.wordStructure?.length : 0;
-        const array = new Array(pinCount + totalCount ).fill(0)
+        const array = new Array(totalCount ).fill(0)
         return array.map(this.renderOneInputField)
     }
 

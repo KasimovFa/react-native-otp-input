@@ -151,7 +151,7 @@ export default class OTPInputView extends Component {
             var _a, _b;
             const { pinCount } = this.props;
             const totalCount = ((_a = this.props.wordStructure) === null || _a === void 0 ? void 0 : _a.length) ? (_b = this.props.wordStructure) === null || _b === void 0 ? void 0 : _b.length : 0;
-            const array = new Array(pinCount + totalCount).fill(0);
+            const array = new Array(totalCount).fill(0);
             return array.map(this.renderOneInputField);
         };
         const { code } = props;
