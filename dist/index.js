@@ -145,9 +145,9 @@ export default class OTPInputView extends Component {
             }
             return (<View pointerEvents="none" key={index + "view"} testID="inputSlotView">
             {index !== 3 ?
-                <TextInput testID="textInput" underlineColorAndroid='rgba(0,0,0,0)' style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]} ref={ref => { this.fields[index] = ref; }} onChangeText={text => {
-                    this.handleChangeText(index, text);
-                }} onKeyPress={({ nativeEvent: { key } }) => { this.handleKeyPressTextInput(index, key); }} value={!clearInputs ? digits[index] : ""} keyboardAppearance={keyboardAppearance} keyboardType={keyboardType} textContentType={isAutoFillSupported ? "oneTimeCode" : "none"} key={index} selectionColor={selectionColor} secureTextEntry={secureTextEntry} editable={editable} placeholder={placeholderCharacter} placeholderTextColor={placeholderTextColor || defaultPlaceholderTextColor}/>
+                <TextInput testID="textInput" underlineColorAndroid='rgba(0,0,0,0)' style={[defaultTextFieldStyle, codeInputFieldStyle]} ref={ref => { this.fields[indexInput] = ref; }} onChangeText={text => {
+                    this.handleChangeText(indexInput, text);
+                }} onKeyPress={({ nativeEvent: { key } }) => { this.handleKeyPressTextInput(indexInput, key); }} value={!clearInputs ? digits[indexInput] : ""} keyboardAppearance={keyboardAppearance} keyboardType={keyboardType} textContentType={isAutoFillSupported ? "oneTimeCode" : "none"} key={indexInput} selectionColor={selectionColor} secureTextEntry={secureTextEntry} editable={editable} placeholder={"0"} placeholderTextColor={placeholderTextColor || defaultPlaceholderTextColor}/>
                 :
                     <View key={index} style={{
                         width: 10,
@@ -200,7 +200,7 @@ export default class OTPInputView extends Component {
                 this.focusField(0);
             }
         }}>
-                    <View style={{ flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', height: '100%' }}>
+                    <View style={{ flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
                         {this.renderTextFields()}
                     </View>
                 </TouchableWithoutFeedback>
