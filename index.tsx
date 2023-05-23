@@ -7,6 +7,24 @@ import styles from './styles'
 import { isAutoFillSupported } from './helpers/device'
 import { codeToArray } from './helpers/codeToArray'
 
+ type TWordStructure = readonly boolean[];
+
+export type TSmartChunkedArray = readonly TWordStructure[];
+
+// const getDerivedIndex = (
+//     smartChunkedArray: TSmartChunkedArray,
+//     rowIndex: number,
+//   ): number => {
+//     if (rowIndex === 0) {
+//       return rowIndex;
+//     }
+     
+
+
+  
+//     return 0
+//   };
+
 export default class OTPInputView extends Component<InputProps, OTPInputViewState> {
     static defaultProps: InputProps = {
         pinCount: 6,
@@ -18,6 +36,7 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
         clearInputs: false,
         placeholderCharacter: "",
         selectionColor: '#000',
+        wordStructure:['true', 'true', 'tue', 'false', 'false', 'false']
     }
 
     private fields: TextInput[] | null[] = []
@@ -109,6 +128,8 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
         })
     }
 
+    
+
     private handleChangeText = (index: number, text: string) => {
         const { onCodeFilled, pinCount } = this.props
         const digits = this.getDigits()
@@ -187,17 +208,17 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
         const { selectedIndex, digits } = this.state
         const { clearInputs, placeholderCharacter, placeholderTextColor } = this.props
         const { color: defaultPlaceholderTextColor } = { ...defaultTextFieldStyle, ...codeInputFieldStyle }
-        let singleInput = true
-        if (this.props.wordStructure) {
-            singleInput = this.props.wordStructure[index];
+        let indexInput = index;
+        if (index > 3) {
+            indexInput = index - 1; 
         }
+        
       
-
         return (
             <View pointerEvents="none" key={index + "view"} testID="inputSlotView">
-                {
-                    singleInput ?
-                    <TextInput
+            {
+               index !== 3 ?
+                <TextInput
                     testID="textInput"
                     underlineColorAndroid='rgba(0,0,0,0)'
                     style={selectedIndex === index ? [defaultTextFieldStyle, codeInputFieldStyle, codeInputHighlightStyle] : [defaultTextFieldStyle, codeInputFieldStyle]}
@@ -223,18 +244,18 @@ export default class OTPInputView extends Component<InputProps, OTPInputViewStat
                     style={{
                         width: 10,
                         backgroundColor: '#93A4BB',
-                         height:3
+                        height:3
                     }}
                   />
-                }
+            }
             </View>
         )
     }
 
     renderTextFields = () => {
         const { pinCount } = this.props
-        const totalCount = this.props.wordStructure?.length ? this.props.wordStructure?.length : 0;
-        const array = new Array(totalCount ).fill(0)
+        const totalCount = 7;
+        const array = new Array(totalCount).fill(0)
         return array.map(this.renderOneInputField)
     }
 
